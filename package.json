@@ -1,0 +1,37 @@
+{
+   "name": "setup-kubectl-action",
+   "version": "5.0.0",
+   "private": true,
+   "main": "lib/index.js",
+   "scripts": {
+      "build": "npm i ncc && npx ncc build src/index.ts -o lib",
+      "test": "jest",
+      "test-coverage": "jest --coverage",
+      "format": "prettier --write .",
+      "format-check": "prettier --check .",
+      "prepare": "husky"
+   },
+   "keywords": [
+      "actions",
+      "node",
+      "setup"
+   ],
+   "author": "GitHub",
+   "license": "MIT",
+   "dependencies": {
+      "@actions/core": "^2.0.2",
+      "@actions/exec": "^2.0.0",
+      "@actions/tool-cache": "^3.0.0",
+      "ncc": "^0.3.6"
+   },
+   "devDependencies": {
+      "@types/jest": "^30.0.0",
+      "@types/node": "^25.0.9",
+      "@vercel/ncc": "^0.38.4",
+      "husky": "^9.1.7",
+      "jest": "^30.2.0",
+      "prettier": "3.8.0",
+      "ts-jest": "^29.4.6",
+      "typescript": "5.9.3"
+   }
+}
