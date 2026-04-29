@@ -1,5 +1,6 @@
 {
   "owner": "azure",
   "name": "setup-kubectl",
-  "visibility": ""
+  "visibility": "internal",
+  "description": "GitHub Action for installing Kubectl"
 }

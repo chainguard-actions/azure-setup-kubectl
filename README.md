@@ -1,5 +1,7 @@
 # azure/setup-kubectl
 
+GitHub Action for installing Kubectl
+
 Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/azure/setup-kubectl](https://github.com/azure/setup-kubectl).
 
 ## Versions
