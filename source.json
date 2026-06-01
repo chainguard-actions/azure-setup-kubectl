@@ -1,6 +1,6 @@
 {
-  "owner": "azure",
+  "owner": "Azure",
   "repo": "setup-kubectl",
   "version": "",
-  "url": "https://github.com/azure/setup-kubectl"
+  "url": "https://github.com/Azure/setup-kubectl"
 }
