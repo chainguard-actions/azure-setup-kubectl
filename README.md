@@ -1,14 +1,14 @@
-# Azure/setup-kubectl
+# azure/setup-kubectl
 
-GitHub Action for installing Kubectl
+Install a specific version of kubectl binary. Acceptable values are latest or any semantic version string like "v1.15.0"
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/Azure/setup-kubectl](https://github.com/Azure/setup-kubectl).
+Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/azure/setup-kubectl](https://github.com/azure/setup-kubectl).
 
 ## Versions
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
-| v5.0.0 | [`v5.0.0`](https://github.com/chainguard-actions/Azure-setup-kubectl/tree/v5.0.0) | — |
+| v5.0.0 | [`v5.0.0`](https://github.com/chainguard-actions/azure-setup-kubectl/tree/v5.0.0) | — |
 
 ## Privacy
 
