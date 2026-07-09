@@ -8,6 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
+| v3.2 | [`v3.2`](https://github.com/chainguard-actions/azure-setup-kubectl/tree/v3.2) | [`901a10e`](https://github.com/azure/setup-kubectl/commit/901a10e89ea615cf61f57ac05cecdf23e7de06d8) |
 | v5.0.0 | [`v5.0.0`](https://github.com/chainguard-actions/azure-setup-kubectl/tree/v5.0.0) | [`15650b3`](https://github.com/azure/setup-kubectl/commit/15650b3ad78fff148532a140b8a4c821796b2d7b) |
 | v5.1.0 | [`v5.1.0`](https://github.com/chainguard-actions/azure-setup-kubectl/tree/v5.1.0) | [`8293235`](https://github.com/azure/setup-kubectl/commit/829323503d1be3d00ca8346e5391ca0b07a9ab0d) |
 
