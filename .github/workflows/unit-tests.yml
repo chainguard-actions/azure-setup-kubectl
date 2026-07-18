@@ -9,12 +9,13 @@ on: # rebuild any PRs and main branch changes
          - main
          - 'releases/*'
 
-permissions:
-   contents: read
+permissions: {}
 
 jobs:
    build: # make sure build/ci works properly
       runs-on: ubuntu-latest
+      permissions:
+         contents: read
       steps:
          - uses: actions/checkout@50fbc622fc4ef5163becd7fab6573eac35f8462e # v1
 

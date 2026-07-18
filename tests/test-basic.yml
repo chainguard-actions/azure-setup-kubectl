@@ -1,0 +1,61 @@
+name: Test basic usage - install latest kubectl
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      RUNNER_TOOL_CACHE: /tmp/tool-cache
+      RUNNER_TEMP: /tmp/runner-temp
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Prepare runner directories
+        run: |
+          mkdir -p /tmp/tool-cache
+          mkdir -p /tmp/runner-temp
+      - id: action
+        uses: .
+        with:
+          version: 'latest'
+      - name: Assert kubectl-path output is set
+        env:
+          KUBECTL_PATH: ${{ steps.action.outputs.kubectl-path }}
+        run: |
+          echo "kubectl-path: $KUBECTL_PATH"
+          if [ -z "$KUBECTL_PATH" ]; then
+            echo "FAIL: kubectl-path output is empty"
+            exit 1
+          fi
+          echo "PASS: kubectl-path is set to $KUBECTL_PATH"
+      - name: Assert kubectl binary exists at output path
+        env:
+          KUBECTL_PATH: ${{ steps.action.outputs.kubectl-path }}
+        run: |
+          echo "Checking for kubectl at: $KUBECTL_PATH"
+          if [ ! -f "$KUBECTL_PATH" ]; then
+            echo "FAIL: kubectl binary not found at $KUBECTL_PATH"
+            exit 1
+          fi
+          echo "PASS: kubectl binary exists at $KUBECTL_PATH"
+      - name: Assert kubectl binary is executable
+        env:
+          KUBECTL_PATH: ${{ steps.action.outputs.kubectl-path }}
+        run: |
+          echo "Checking kubectl is executable..."
+          if [ ! -x "$KUBECTL_PATH" ]; then
+            echo "FAIL: kubectl binary is not executable"
+            exit 1
+          fi
+          echo "PASS: kubectl binary is executable"
+      - name: Assert kubectl responds to version command
+        env:
+          KUBECTL_PATH: ${{ steps.action.outputs.kubectl-path }}
+        run: |
+          echo "Running kubectl version --client..."
+          VERSION_OUTPUT=$("$KUBECTL_PATH" version --client 2>&1 || true)
+          echo "version output: $VERSION_OUTPUT"
+          if [ -z "$VERSION_OUTPUT" ]; then
+            echo "FAIL: kubectl version produced no output"
+            exit 1
+          fi
+          echo "PASS: kubectl is functional"

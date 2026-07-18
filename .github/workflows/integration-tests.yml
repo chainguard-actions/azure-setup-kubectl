@@ -9,23 +9,23 @@ on: # rebuild any PRs and main branch changes
          - main
          - 'releases/*'
 
-permissions:
-   contents: read
+permissions: {}
 
 jobs:
    run-integration-test:
       name: Validate release and master branch
       runs-on: ubuntu-latest
+      permissions:
+         contents: read
       env:
          KUBECONFIG: /home/runner/.kube/config
+         PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
       steps:
          - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
            name: Checkout from PR branch
 
          - id: action-npm-build
            name: npm install and build
-           env:
-              PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
            run: |
               echo "$PR_BASE_REF"
               if [[ "$PR_BASE_REF" != releases/* ]]; then
