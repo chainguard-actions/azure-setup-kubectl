@@ -1,0 +1,34 @@
+name: Test kubectl-path output
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: setup-kubectl
+        uses: .
+        with:
+          version: 'v1.27.0'
+      - name: Assert kubectl-path output is set
+        env:
+          ACTUAL: ${{ steps.setup-kubectl.outputs.kubectl-path }}
+        run: |
+          echo "actual kubectl-path: $ACTUAL"
+          if [ -z "$ACTUAL" ]; then
+            echo "FAIL: kubectl-path output is empty"
+            exit 1
+          fi
+          echo "PASS: kubectl-path is set to '$ACTUAL'"
+      - name: Assert kubectl-path points to a valid executable
+        env:
+          KUBECTL_PATH: ${{ steps.setup-kubectl.outputs.kubectl-path }}
+        run: |
+          echo "Checking if kubectl-path is executable: $KUBECTL_PATH"
+          if [ ! -x "$KUBECTL_PATH" ]; then
+            echo "FAIL: '$KUBECTL_PATH' is not an executable file"
+            exit 1
+          fi
+          echo "PASS: '$KUBECTL_PATH' is executable"
+          "$KUBECTL_PATH" version --client
+          echo "PASS: kubectl at output path runs successfully"
