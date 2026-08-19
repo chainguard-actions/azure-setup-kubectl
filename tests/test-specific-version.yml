@@ -1,0 +1,51 @@
+name: Test kubectl installer - specific version
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: 'v1.28.0'
+      - name: Assert kubectl-path output is set
+        env:
+          KUBECTL_PATH: ${{ steps.action.outputs.kubectl-path }}
+        run: |
+          echo "kubectl-path: $KUBECTL_PATH"
+          if [ -z "$KUBECTL_PATH" ]; then
+            echo "FAIL: kubectl-path output is empty"
+            exit 1
+          fi
+          echo "PASS: kubectl-path is set to $KUBECTL_PATH"
+      - name: Assert kubectl binary exists and is executable
+        env:
+          KUBECTL_PATH: ${{ steps.action.outputs.kubectl-path }}
+        run: |
+          echo "Checking kubectl binary at: $KUBECTL_PATH"
+          if [ ! -f "$KUBECTL_PATH" ]; then
+            echo "FAIL: kubectl binary not found at $KUBECTL_PATH"
+            exit 1
+          fi
+          if [ ! -x "$KUBECTL_PATH" ]; then
+            echo "FAIL: kubectl binary is not executable"
+            exit 1
+          fi
+          echo "PASS: kubectl binary exists and is executable"
+      - name: Assert kubectl version matches requested version
+        run: |
+          echo "kubectl version output:"
+          kubectl version --client --output=yaml 2>/dev/null || kubectl version --client 2>&1 || true
+          # Extract version using multiple methods
+          INSTALLED_VERSION=$(kubectl version --client --output=yaml 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
+          if [ -z "$INSTALLED_VERSION" ]; then
+            INSTALLED_VERSION=$(kubectl version --client 2>&1 | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
+          fi
+          echo "Installed version: $INSTALLED_VERSION"
+          if [ "$INSTALLED_VERSION" != "v1.28.0" ]; then
+            echo "FAIL: expected version v1.28.0 but got $INSTALLED_VERSION"
+            exit 1
+          fi
+          echo "PASS: kubectl version is v1.28.0"
