@@ -1,0 +1,37 @@
+{
+   "name": "setup-kubectl-action",
+   "version": "5.2.0",
+   "private": true,
+   "main": "lib/index.js",
+   "type": "module",
+   "scripts": {
+      "build": "tsc --noEmit && esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=lib/index.js --banner:js=\"import { createRequire } from 'module';const require = createRequire(import.meta.url);\"",
+      "typecheck": "tsc --noEmit",
+      "test": "vitest run",
+      "test-coverage": "vitest run --coverage",
+      "format": "prettier --write .",
+      "format-check": "prettier --check .",
+      "prepare": "husky"
+   },
+   "keywords": [
+      "actions",
+      "node",
+      "setup"
+   ],
+   "author": "GitHub",
+   "license": "MIT",
+   "dependencies": {
+      "@actions/core": "^3.0.1",
+      "@actions/exec": "^3.0.0",
+      "@actions/http-client": "^4.0.1",
+      "@actions/tool-cache": "^4.0.0"
+   },
+   "devDependencies": {
+      "@types/node": "^26.4.1",
+      "esbuild": "^0.28.2",
+      "husky": "^9.1.7",
+      "prettier": "3.9.6",
+      "typescript": "7.0.2",
+      "vitest": "^5.0.0"
+   }
+}
